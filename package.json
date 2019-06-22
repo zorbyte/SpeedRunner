@@ -1,0 +1,88 @@
+{
+  "name": "speed-runner",
+  "productName": "speed-runner",
+  "author": {
+    "name": "Oscar Davies",
+    "email": "odavies@mybce.catholic.edu.au"
+  },
+  "version": "1.0.5",
+  "description": "My game for school.",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "start": "node fuse",
+    "start:electron": "electron .",
+    "start:electron:watch": "nodemon --watch 'dist/main/*.*' --exec npm run start:electron",
+    "build": "npm run lint && cross-env NODE_ENV=production && node fuse dist",
+    "prod": "cross-env NODE_ENV=production && npm run build && npm run start:electron",
+    "packager": "npm run build && node ./package.js",
+    "package": "npm run build && build --publish never",
+    "pack-and-publish": "npm run build && build --publish always",
+    "package-all": "npm run build && build -mwl",
+    "package-linux": "npm run build && build --linux",
+    "package-win": "npm run build && build --win --x64"
+  },
+  "build": {
+    "productName": "SpeedRunner",
+    "appId": "io.zorbyte.SpeedRunner",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "assets/",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zorbyte/SpeedRunner.git"
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/hookrouter": "^2.2.1",
+    "@types/pixi.js": "^4.8.8",
+    "@types/react": "^16.8.22",
+    "@types/react-dom": "^16.8.4",
+    "cross-env": "^5.0.5",
+    "electron": "^5.0.4",
+    "express": "^4.15.4",
+    "fuse-box": "^4.0.0-next.2",
+    "nodemon": "^1.19.1",
+    "typescript": "^3.3.1",
+    "uglify-js": "^3.0.27"
+  },
+  "dependencies": {
+    "hookrouter": "^1.2.3",
+    "keycode": "^2.2.0",
+    "memoize-one-ts": "^0.0.1",
+    "pixi.js": "^5.0.4",
+    "preact": "10.0.0-beta.3"
+  }
+}
