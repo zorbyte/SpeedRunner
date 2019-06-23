@@ -18,7 +18,7 @@
     "package-all": "npm run build && build -mwl",
     "package-linux": "npm run build && build --linux",
     "package-mac": "npm run build && build --mac",
-    "package-win": "npm run build && electron-build --win --x64"
+    "package-win": "npm run build && build --win --x64"
   },
   "build": {
     "productName": "SpeedRunner",
