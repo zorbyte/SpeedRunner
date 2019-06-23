@@ -4,7 +4,7 @@ import { WINDOW_SIZE } from "../constants";
 import Utils from "../Utils";
 import Floor from "./Floor";
 
-import { Sprite } from "pixi.js";
+import { Sprite, Rectangle } from "pixi.js";
 
 class Player extends Entity {
   public sprite!: Sprite;
@@ -19,8 +19,7 @@ class Player extends Entity {
 
   protected init() {
     const s = this.sprite;
-    s.scale.set(2, 2);
-    s.anchor.set(0.5, 0.5);
+    s.anchor.set(0.5);
     s.x = WINDOW_SIZE.width / 2;
     s.y = WINDOW_SIZE.height / 2;
 
@@ -41,6 +40,41 @@ class Player extends Entity {
       .create("right")
       .onPress(() => this.rightMove = 1)
       .onRelease(() => this.rightMove = 0);
+  }
+
+  /**
+   * @description Checks and corrects collisions.
+   * @param bounds The bounds of the colliding object.
+   * @param otherBounds The bounds of the collidee.
+   * @param corX Corrects X axis collisions.
+   * @param corY Corrects Y axis collisions.
+   */
+  protected checkCorrectCollision(
+    bounds: Rectangle,
+    otherBounds: Rectangle,
+    corX = true,
+    corY = true,
+  ): { x: boolean, y: boolean } {
+    let result = {
+      x: false,
+      y: false,
+    };
+
+    if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).y) {
+      result.y = true;
+      if (corY) {
+        this.vy = 0;
+        if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).y) this.vy += Math.sign(this.vy);
+      }
+    } else if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).x) {
+      result.x = true;
+      if (corX) {
+        this.vx = 0;
+        if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).x) this.vx += Math.sign(this.vx);
+      }
+    }
+
+    return result;
   }
 
   protected onTick() {
@@ -68,18 +102,18 @@ class Player extends Entity {
       const bounds = this.sprite.getBounds();
       const floorBounds = flr.sprite.getBounds();
 
-      if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) {
+      let { y } = this
+        .checkCorrectCollision(bounds, floorBounds, true, false);
+
+      if (y) {
         if (this.vy > 8.7 || this.elastic) {
           this.elastic = this.vy > 6;
           this.vy *= -0.75;
         } else {
+          this.jumpAmnt = 0;
           this.vy = 0;
           if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) this.vy += Math.sign(this.vy);
-          this.jumpAmnt = 0;
         }
-      } else if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) {
-        this.vx = 0;
-        if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) this.vx += Math.sign(this.vx);
       }
     }
   }

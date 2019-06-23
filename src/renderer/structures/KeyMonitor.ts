@@ -1,13 +1,17 @@
 import keyCode from "keycode";
 
 class KeyMonitor {
+  private keyCode: number;
   private isDown = false;
   private isUp = true;
   private pressHandler?: () => any;
   private releaseHandler?: () => any;
+  private static unsubscribers: KeyMonitor["_unsubscribe"][] = [];
 
-  constructor(private keyName: string) {
+  constructor(keyName: string) {
+    this.keyCode = keyCode(keyName)
     this.handler = this.handler.bind(this);
+    KeyMonitor.unsubscribers.push(this._unsubscribe.bind(this));
   }
 
   public create(keyName: string): KeyMonitor {
@@ -41,6 +45,11 @@ class KeyMonitor {
   }
 
   public unsubscribe() {
+    KeyMonitor.unsubscribers
+      .forEach(unSubber => unSubber());
+  }
+
+  private _unsubscribe() {
     if (this.pressHandler) window
       .removeEventListener(
         "keydown",
@@ -55,7 +64,7 @@ class KeyMonitor {
   }
 
   private handler(event: KeyboardEvent) {
-    if (keyCode.isEventKey(event, this.keyName)) {
+    if (keyCode.isEventKey(event, this.keyCode)) {
       this.isDown = event.type === "keydown";
       this.isUp = event.type === "keyup";
       if (this.isDown && this.pressHandler) this.pressHandler();

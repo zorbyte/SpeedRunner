@@ -51,7 +51,7 @@ abstract class Entity {
    * @protected
    * @abstract
    * @name init
-   * @description Runs this when the entity is initialised.
+   * @description Runs when all the resources such as sprites are loaded.
    */
   protected init?(): void | Promise<void>;
 
