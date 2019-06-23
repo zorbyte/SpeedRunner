@@ -1,17 +1,16 @@
 import React, { FC } from "react";
-import { useRoutes } from 'hookrouter';
+import { HashRouter, Route, Switch } from "react-router-dom";
 import TitleScreen from "./TitleScreen";
 import Game from "./Game";
 
-const routes = {
-  "/": () => <TitleScreen />,
-  "/game": () => <Game />,
-};
-
-const Root: FC = () => {
-  const routeResult = useRoutes(routes);
-
-  return routeResult || <h1>Not Found.</h1>;
-}
+const Root: FC = () => (
+  <HashRouter>
+    <Switch>
+      <Route exact path="/" component={TitleScreen} />
+      <Route path="/game" component={Game} />
+      <Route component={() => <h1>Not found</h1>} />
+    </Switch>
+  </HashRouter>
+);
 
 export default Root;

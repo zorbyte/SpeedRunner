@@ -3,13 +3,6 @@ import { memoizeOne } from "memoize-one-ts";
 
 export type TContainers = Sprite | Container | Graphics;
 
-type TCollideCheck = {
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-};
-
 class Utils {
   public static contain(sprite: any, container: any) {
 
@@ -44,24 +37,6 @@ class Utils {
   }
 
   @memoizeOne
-  public static calculateCollisionDiff(factor: number, velocity: number) {
-    let totalCheck = factor + velocity;
-    let collisionDiff = 0;
-    if ((velocity % 1) !== 0) {
-      let lastNums: string = totalCheck
-        .toString();
-      let sign = lastNums.startsWith("-") ? "-" : "";
-      lastNums = lastNums.split(".")[1]
-        .replace(/(.*?)/, "0")
-        .slice(0, -1);
-        console.log(`last: ${lastNums}`)
-      lastNums = `${sign}0.${lastNums}`;
-      collisionDiff = parseFloat(lastNums);
-    }
-    console.log(collisionDiff * -Math.sign(velocity))
-    return collisionDiff * Math.sign(velocity);
-  }
-
   public static checkCollision(vx: number, vy: number, a: Rectangle, b: Rectangle): {
     x: boolean;
     y: boolean;

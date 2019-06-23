@@ -11,7 +11,6 @@ class Floor extends Entity {
 
   protected init() {
     const s = this.sprite = new Graphics();
-    //s.lineStyle(4, 0xFF3300, 1);
     s.beginFill(0x66CCFF);
     s.drawRect(0, 0, 64, 64);
     s.endFill();

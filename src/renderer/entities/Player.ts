@@ -8,6 +8,7 @@ import { Sprite } from "pixi.js";
 
 class Player extends Entity {
   public sprite!: Sprite;
+  public spriteName = "Player";
   private leftMove: 0 | 1 = 0;
   private rightMove: 0 | 1 = 0;
 
@@ -65,11 +66,9 @@ class Player extends Entity {
       const floorBounds = flr.sprite.getBounds();
 
       if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) {
-        console.log(this.vy)
         if (this.vy > 8.7 || this.elastic) {
           this.elastic = this.vy > 6;
           this.vy *= -0.75;
-          //this.jump = false;
         } else {
           this.vy = 0;
           if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) this.vy -= Math.sign(this.vy);
@@ -80,8 +79,6 @@ class Player extends Entity {
         if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) this.vx -= Math.sign(this.vx);
       }
     }
-
-    //console.log(this.vy);
   }
 }
 

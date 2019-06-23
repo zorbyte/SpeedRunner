@@ -1,4 +1,4 @@
-import { Sprite, Application, Loader, Texture, Container, Graphics } from "pixi.js";
+import { Sprite, Application, Loader, Texture } from "pixi.js";
 import { TContainers } from "../Utils";
 
 export const kOnTick = Symbol("Entity.onTick");
@@ -9,14 +9,14 @@ abstract class Entity {
   public vy = 0;
 
   public sprite!: TContainers;
-  public spriteName: string;
+  public spriteName: string | undefined = void 0;
 
   public _noSprite = false;
   public _noTick = false;
 
   constructor(protected app: Application, protected entities: Entity[], spriteName?: string) {
     // Determine the sprite name.
-    this.spriteName = spriteName as string || this.constructor.name;
+    this.spriteName = this.spriteName || spriteName as string;
 
     Loader.shared.on("complete", () => {
       if (this.spriteName) this.sprite = new Sprite(Texture.from(this.spriteName));

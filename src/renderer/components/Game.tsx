@@ -2,7 +2,7 @@ import React, { PureComponent, createRef } from "react";
 import { Application, Loader } from "pixi.js";
 
 import Entity, { kOnTick } from "../structures/Entity";
-import { WINDOW_SIZE } from "../constants";
+import { WINDOW_SIZE, ASSETS_DIR } from "../constants";
 import entities from "../entities";
 
 class Game extends PureComponent {
@@ -24,7 +24,7 @@ class Game extends PureComponent {
       if (!entity._noSprite) {
         Loader
           .shared
-          .add(entity.spriteName, `${process.env.NODE_ENV !== "production" ? "/out" : ""}/assets/${entity.spriteName}.png`);
+          .add(entity.spriteName, `${ASSETS_DIR}${entity.spriteName}.png`);
       }
       this.entities.push(entity);
     });

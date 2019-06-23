@@ -49,7 +49,7 @@ Sparky.task("build:renderer", () => {
       production && QuantumPlugin({
         bakeApiIntoBundle: "index",
         target: "browser",
-        treeshake: true,
+        //treeshake: true,
         removeExportsInterop: false,
         uglify: true,
       }),
