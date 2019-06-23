@@ -79,7 +79,7 @@ class Player extends Entity {
         }
       } else if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) {
         this.vx = 0;
-        if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) this.vx -= Math.sign(this.vx);
+        if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) this.vx += Math.sign(this.vx);
       }
     }
   }
