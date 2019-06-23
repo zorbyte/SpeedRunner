@@ -42,6 +42,8 @@ class Game extends PureComponent {
   public componentDidMount() {
     const { view } = this.app;
     this.gameRef.current.appendChild(view);
+    // @ts-ignore
+    if (process.env.NODE_ENV != "production") window.GAME = this;
   }
 
   public render() {

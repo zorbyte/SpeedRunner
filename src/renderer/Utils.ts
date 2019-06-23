@@ -49,14 +49,17 @@ class Utils {
     let collisionDiff = 0;
     if ((velocity % 1) !== 0) {
       let lastNums: string = totalCheck
-        .toString()
-        .split(".")[1]
+        .toString();
+      let sign = lastNums.startsWith("-") ? "-" : "";
+      lastNums = lastNums.split(".")[1]
         .replace(/(.*?)/, "0")
         .slice(0, -1);
-      lastNums = `0.${lastNums}0000001`;
+        console.log(`last: ${lastNums}`)
+      lastNums = `${sign}0.${lastNums}`;
       collisionDiff = parseFloat(lastNums);
     }
-    return collisionDiff * -Math.sign(velocity);
+    console.log(collisionDiff * -Math.sign(velocity))
+    return collisionDiff * Math.sign(velocity);
   }
 
   public static checkCollision(vx: number, vy: number, a: Rectangle, b: Rectangle): {

@@ -10,6 +10,8 @@ class Player extends Entity {
   public sprite!: Sprite;
   private leftMove: 0 | 1 = 0;
   private rightMove: 0 | 1 = 0;
+
+  private elastic = false;
   private jumpAmnt: number = 0;
   private jumpReleased = true;
   private jump = false;
@@ -43,16 +45,17 @@ class Player extends Entity {
     let moveDir = this.rightMove - this.leftMove;
 
     // Sets the move direction and adds sliperyness.
-    this.vx = moveDir === 0 ? this.vx * 0.8 : moveDir * 7;
+    this.vx = moveDir === 0 ? this.vx * 0.5 : moveDir * 8;
 
     // Gravity.
     this.vy += 0.4;
 
     if (this.jump && this.jumpAmnt < 3) {
       this.vy = -8;
-      this.jump = false;
       this.jumpReleased = false;
     }
+
+    this.jump = false;
 
     let flrs = this.entities
       .filter(e => e instanceof Floor);
@@ -62,21 +65,23 @@ class Player extends Entity {
       const floorBounds = flr.sprite.getBounds();
 
       if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) {
-        if (this.vy > 3.3) {
+        console.log(this.vy)
+        if (this.vy > 8.7 || this.elastic) {
+          this.elastic = this.vy > 6;
           this.vy *= -0.75;
-          this.jump = false;
+          //this.jump = false;
         } else {
-          //this.y += Utils.calculateCollisionDiff(this.y, Math.sign(this.vy));
           this.vy = 0;
+          if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) this.vy -= Math.sign(this.vy);
           this.jumpAmnt = 0;
         }
       } else if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) {
-        this.x += Utils.calculateCollisionDiff(this.x, this.vx);
         this.vx = 0;
+        if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) this.vx -= Math.sign(this.vx);
       }
     }
 
-    console.log(this.vy);
+    //console.log(this.vy);
   }
 }
 

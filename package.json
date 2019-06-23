@@ -12,14 +12,14 @@
     "start": "node fuse",
     "start:electron": "electron .",
     "start:electron:watch": "nodemon --watch 'dist/main/*.*' --exec npm run start:electron",
-    "build": "npm run lint && cross-env NODE_ENV=production && node fuse dist",
+    "build": "cross-env NODE_ENV=production && node fuse dist",
     "prod": "cross-env NODE_ENV=production && npm run build && npm run start:electron",
     "packager": "npm run build && node ./package.js",
     "package": "npm run build && build --publish never",
     "pack-and-publish": "npm run build && build --publish always",
     "package-all": "npm run build && build -mwl",
     "package-linux": "npm run build && build --linux",
-    "package-win": "npm run build && build --win --x64"
+    "package-win": "npm run build && electron-build --win --x64"
   },
   "build": {
     "productName": "SpeedRunner",
@@ -72,9 +72,11 @@
     "@types/react-dom": "^16.8.4",
     "cross-env": "^5.0.5",
     "electron": "^5.0.4",
+    "electron-builder": "^20.44.4",
     "express": "^4.15.4",
     "fuse-box": "^4.0.0-next.2",
     "nodemon": "^1.19.1",
+    "terser": "^4.0.0",
     "typescript": "^3.3.1",
     "uglify-js": "^3.0.27"
   },
