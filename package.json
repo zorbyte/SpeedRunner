@@ -5,7 +5,7 @@
     "name": "Oscar Davies",
     "email": "odavies@mybce.catholic.edu.au"
   },
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "My game for school.",
   "main": "dist/main/index.js",
   "scripts": {
