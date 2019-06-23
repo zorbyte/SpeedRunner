@@ -1,5 +1,6 @@
 import { Sprite, Application, Loader, Texture } from "pixi.js";
 import { TContainers } from "../Utils";
+import Game from "../components/Game";
 
 export const kOnTick = Symbol("Entity.onTick");
 
@@ -14,7 +15,7 @@ abstract class Entity {
   public _noSprite = false;
   public _noTick = false;
 
-  constructor(protected app: Application, protected entities: Entity[], spriteName?: string) {
+  constructor(protected app: Application, protected entities: Entity[], protected game: Game, spriteName?: string) {
     // Determine the sprite name.
     this.spriteName = this.spriteName || spriteName as string;
 

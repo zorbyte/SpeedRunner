@@ -63,14 +63,15 @@ Sparky.task("build:renderer", () => {
     app.use("/out", express.static(join(dist, "renderer/out")));
     app.get("/*", (_req, res) => {
       res.sendFile(join(dist, "renderer/index.html"));
-      //next();
     });
   });
 
   const app = fuse.bundle("index")
     .instructions("> index.tsx");
 
-  if (!production) app.watch();
+  if (!production) app
+    .watch()
+    .hmr({ reload: true });
 
   return fuse.run().then(fuseHtml.run.bind(fuseHtml));
 });

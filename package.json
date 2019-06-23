@@ -15,9 +15,9 @@
     "build": "cross-env NODE_ENV=production && node fuse dist",
     "prod": "cross-env NODE_ENV=production && npm run build && npm run start:electron",
     "package": "npm run build && build --publish never",
-    "pack-and-publish": "npm run build && build --publish always",
     "package-all": "npm run build && build -mwl",
     "package-linux": "npm run build && build --linux",
+    "package-mac": "npm run build && build --mac",
     "package-win": "npm run build && electron-build --win --x64"
   },
   "build": {
@@ -64,7 +64,6 @@
   },
   "license": "UNLICENSED",
   "devDependencies": {
-    "@types/hookrouter": "^2.2.1",
     "@types/pixi.js": "^4.8.8",
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
@@ -83,9 +82,9 @@
     "uglify-js": "^3.0.27"
   },
   "dependencies": {
-    "hookrouter": "^1.2.3",
     "keycode": "^2.2.0",
     "memoize-one-ts": "^0.0.1",
+    "pixi-viewport": "^4.0.0-beta.2",
     "pixi.js": "^5.0.4",
     "preact": "10.0.0-beta.3",
     "react-router": "^5.0.1",

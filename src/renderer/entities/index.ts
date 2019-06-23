@@ -11,6 +11,7 @@ const floorLayer = [
 ]
 
 export default [
-  ...floorLayer,
+  //...floorLayer,
+  Floor,
   Player,
 ];

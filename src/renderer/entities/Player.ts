@@ -24,6 +24,8 @@ class Player extends Entity {
     s.x = WINDOW_SIZE.width / 2;
     s.y = WINDOW_SIZE.height / 2;
 
+    this.game.viewport.follow(s, { radius: 85, acceleration: 4 });
+
     new KeyMonitor("up")
       .onPress(() => {
         if (!this.jumpReleased) return;
@@ -58,6 +60,7 @@ class Player extends Entity {
 
     this.jump = false;
 
+    // Get the floor instances.
     let flrs = this.entities
       .filter(e => e instanceof Floor);
 
@@ -71,7 +74,7 @@ class Player extends Entity {
           this.vy *= -0.75;
         } else {
           this.vy = 0;
-          if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) this.vy -= Math.sign(this.vy);
+          if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) this.vy += Math.sign(this.vy);
           this.jumpAmnt = 0;
         }
       } else if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).x) {

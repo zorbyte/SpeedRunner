@@ -9,13 +9,18 @@ class Floor extends Entity {
 
   public sprite!: Graphics;
 
+  public width = 512;
+  public height = 64;
+  public initX = 370;
+  public initY = 370;
+
   protected init() {
     const s = this.sprite = new Graphics();
     s.beginFill(0x66CCFF);
-    s.drawRect(0, 0, 64, 64);
+    s.drawRect(0, 0, this.width, this.height);
     s.endFill();
-    s.x = 242 + (128 * multiplier);
-    s.y = 370;
+    s.x = this.initX;
+    s.y = this.initY;
     this.app.stage.addChild(s);
     multiplier++;
   }

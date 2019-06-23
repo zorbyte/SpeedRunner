@@ -4,9 +4,7 @@ const dev = env === "development";
 import { join } from "path";
 import { format } from "url";
 import electron = require("electron");
-
-const { app } = electron;
-const { BrowserWindow } = electron;
+const { BrowserWindow, app, Menu } = electron;
 
 // Keep a global reference of the window object, otherwise the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -25,6 +23,7 @@ function createWindow() {
   if (dev) {
     mainWindow.loadURL("http://localhost:4444");
   } else {
+    Menu.setApplicationMenu(null);
     mainWindow.loadURL(format({
       pathname: join(app.getAppPath(), "dist", "renderer", "index.html"),
       protocol: "file:",
