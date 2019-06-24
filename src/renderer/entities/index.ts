@@ -1,5 +1,6 @@
 import Player from "./Player";
 import Floor from "./Floor";
+import Enemy from './Enemy';
 
 const floorLayer = [
   Floor,
@@ -13,5 +14,6 @@ const floorLayer = [
 export default [
   //...floorLayer,
   Floor,
+  Enemy,
   Player,
 ];

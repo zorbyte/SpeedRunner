@@ -1,4 +1,4 @@
-import React, { PureComponent, createRef } from "react";
+import React, { PureComponent, Component, createRef } from "react";
 import { Application, Loader } from "pixi.js";
 import { Viewport } from "pixi-viewport";
 
@@ -6,7 +6,7 @@ import Entity, { kOnTick } from "../structures/Entity";
 import { WINDOW_SIZE, ASSETS_DIR } from "../constants";
 import entities from "../entities";
 
-class Game extends PureComponent {
+class Game extends Component {
   private app = new Application({
     antialias: true,
     ...WINDOW_SIZE
@@ -33,10 +33,8 @@ class Game extends PureComponent {
     stage.addChild(this.viewport);
 
     this.viewport
-      //.clamp({ direction: "all" })
-      .bounce()
-      .zoomPercent(0.01)
-      //.decelerate();
+      .clamp({ direction: "all" })
+      .zoomPercent(0.01);
 
     entities.forEach(EntityMemb => {
       let entity = new EntityMemb(this.app, this.entities, this);

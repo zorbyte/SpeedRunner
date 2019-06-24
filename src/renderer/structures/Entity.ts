@@ -9,6 +9,10 @@ abstract class Entity {
   public vx = 0;
   public vy = 0;
 
+  // Float values.
+  private posX = 0;
+  private posY = 0;
+
   public sprite!: TContainers;
   public spriteName: string | undefined = void 0;
 
@@ -67,8 +71,12 @@ abstract class Entity {
   public [kOnTick](delta: number): void {
     if (this.onTick) this.onTick(delta);
 
-    this.x += this.vx * delta;
-    this.y += this.vy * delta;
+    // Use this for floats to prevent stutters.
+    this.posX = this.vx * delta;
+    this.posY = this.vy * delta;
+
+    this.x += Math.round(this.posX);
+    this.y += Math.round(this.posY);
   }
 }
 

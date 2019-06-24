@@ -1,12 +1,13 @@
-import Entity from "../structures/Entity";
+import PhysicsEntity from "../structures/PhysicsEntity";
 import KeyMonitor from "../structures/KeyMonitor";
 import { WINDOW_SIZE } from "../constants";
 import Utils from "../Utils";
 import Floor from "./Floor";
 
-import { Sprite, Rectangle } from "pixi.js";
+import { Sprite } from "pixi.js";
+import Enemy from "./Enemy";
 
-class Player extends Entity {
+class Player extends PhysicsEntity {
   public sprite!: Sprite;
   public spriteName = "Player";
   private leftMove: 0 | 1 = 0;
@@ -42,46 +43,11 @@ class Player extends Entity {
       .onRelease(() => this.rightMove = 0);
   }
 
-  /**
-   * @description Checks and corrects collisions.
-   * @param bounds The bounds of the colliding object.
-   * @param otherBounds The bounds of the collidee.
-   * @param corX Corrects X axis collisions.
-   * @param corY Corrects Y axis collisions.
-   */
-  protected checkCorrectCollision(
-    bounds: Rectangle,
-    otherBounds: Rectangle,
-    corX = true,
-    corY = true,
-  ): { x: boolean, y: boolean } {
-    let result = {
-      x: false,
-      y: false,
-    };
-
-    if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).y) {
-      result.y = true;
-      if (corY) {
-        this.vy = 0;
-        if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).y) this.vy += Math.sign(this.vy);
-      }
-    } else if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).x) {
-      result.x = true;
-      if (corX) {
-        this.vx = 0;
-        if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).x) this.vx += Math.sign(this.vx);
-      }
-    }
-
-    return result;
-  }
-
   protected onTick() {
     // The move direction.
     let moveDir = this.rightMove - this.leftMove;
 
-    // Sets the move direction and adds sliperyness.
+    // Sets the move direction and adds slipperiness.
     this.vx = moveDir === 0 ? this.vx * 0.5 : moveDir * 8;
 
     // Gravity.
@@ -95,12 +61,17 @@ class Player extends Entity {
     this.jump = false;
 
     // Get the floor instances.
-    let flrs = this.entities
+    const flrs = this.entities
       .filter(e => e instanceof Floor);
 
+    const enemies = this.entities
+      .filter(e => e instanceof Enemy);
+
+    const bounds = this.sprite.getBounds();
+
     for (const flr of flrs) {
-      const bounds = this.sprite.getBounds();
-      const floorBounds = flr.sprite.getBounds();
+      const floorBounds = flr.sprite
+        .getBounds();
 
       let { y } = this
         .checkCorrectCollision(bounds, floorBounds, true, false);
@@ -115,6 +86,12 @@ class Player extends Entity {
           if (Utils.checkCollision(this.vx, this.vy, bounds, floorBounds).y) this.vy += Math.sign(this.vy);
         }
       }
+    }
+
+    for (const enm of enemies) {
+      const enemyBounds = enm.sprite.getBounds();
+      const { x, y } = this.checkCorrectCollision(bounds, enemyBounds, false, false);
+      if (x || y) this.game.props.history();
     }
   }
 }
