@@ -8,6 +8,7 @@ const {
 
 const express = require("express");
 const { join } = require("path");
+const { spawn } = require("child_process");
 
 let production = false;
 
@@ -98,7 +99,13 @@ Sparky.task("build:main", () => {
 
   if (!production) app.watch();
 
-  return fuse.run();
+  return fuse.run().then(() => {
+    // launch the electron app if the platform is windows, fusebox behaviour is different on MacOS.
+    if (process.platform === "win32" && !production) {
+      const child = spawn("npm", ["run", "start:electron:watch"], { shell: true, stdio: "pipe" });
+      child.stderr.on("data", data => console.error(data.toString()));
+    }
+  });
 });
 
 
@@ -111,6 +118,6 @@ Sparky.task("clean:dist", () => Sparky.src("dist/*").clean("dist/"));
 // Wipe it all from .fusebox - cache dir.
 Sparky.task("clean:cache", () => Sparky.src(".fusebox/*").clean(".fusebox/"));
 
-// Production build.
+// Production build..
 Sparky.task("set-production-env", () => production = true);
 Sparky.task("dist", ["clean:dist", "clean:cache", "set-production-env", "build:renderer", "copy:renderer:assets", "build:main"], () => { })
