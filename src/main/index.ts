@@ -13,6 +13,9 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
+    fullscreen: false,
+    title: "SpeedRunner",
+    maximizable: false,
     autoHideMenuBar: true,
     resizable: false,
     width: 800,

@@ -1,6 +1,6 @@
 import PhysicsEntity from "../structures/PhysicsEntity";
-import { WINDOW_SIZE } from '../constants';
-import { Sprite } from 'pixi.js';
+import { WINDOW_SIZE } from "../constants";
+import { Sprite } from "pixi.js";
 
 class Enemy extends PhysicsEntity {
   public sprite!: Sprite;

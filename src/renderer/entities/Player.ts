@@ -5,7 +5,7 @@ import Utils from "../Utils";
 import Floor from "./Floor";
 
 import { Sprite } from "pixi.js";
-import Enemy from "./Enemy";
+//import Enemy from "./Enemy";
 
 class Player extends PhysicsEntity {
   public sprite!: Sprite;

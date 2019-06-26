@@ -1,6 +1,6 @@
 import Player from "./Player";
 import Floor from "./Floor";
-import Enemy from './Enemy';
+import Enemy from "./Enemy";
 
 const floorLayer = [
   Floor,
