@@ -42,8 +42,8 @@ class Utils {
     y: boolean;
   } {
     let result: Record<string, boolean> = {
-      x: b.contains(a.left + vx, a.top) || b.contains(a.left + vx, a.bottom) || b.contains(a.right + vx, a.top) || b.contains(a.right + vx, a.bottom),
-      y: b.contains(a.left, a.top + vy) || b.contains(a.left, a.bottom + vy) || b.contains(a.right, a.top + vy) || b.contains(a.right, a.bottom + vy),
+      x: b.contains(a.left + vx, a.top - Math.sign(vy)) || b.contains(a.left + vx, a.bottom - Math.sign(vy)) || b.contains(a.right + vx, a.top - Math.sign(vy)) || b.contains(a.right + vx, a.bottom - Math.sign(vy)),
+      y: b.contains(a.left - Math.sign(vx), a.top + vy) || b.contains(a.left - Math.sign(vx), a.bottom + vy) || b.contains(a.right - Math.sign(vx), a.top + vy) || b.contains(a.right - Math.sign(vx), a.bottom + vy),
     };
 
     return result as any;

@@ -20,26 +20,23 @@ class PhysicsEntity extends Entity {
     corX = true,
     corY = true,
   ): { x: boolean, y: boolean } {
-    let result = {
-      x: false,
-      y: false,
-    };
+    const colRes = Utils.checkCollision(this.vx, this.vy, bounds, otherBounds);
 
-    if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).y) {
-      result.y = true;
+    if (colRes.y) {
       if (corY) {
         this.vy = 0;
         if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).y) this.vy += Math.sign(this.vy);
       }
-    } else if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).x) {
-      result.x = true;
+    }
+
+    if (colRes.x) {
       if (corX) {
         this.vx = 0;
         if (Utils.checkCollision(this.vx, this.vy, bounds, otherBounds).x) this.vx += Math.sign(this.vx);
       }
     }
 
-    return result;
+    return colRes;
   }
 }
 

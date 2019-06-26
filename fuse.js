@@ -8,7 +8,6 @@ const {
 
 const express = require("express");
 const { join } = require("path");
-const { spawn } = require("child_process");
 
 let production = false;
 
@@ -21,7 +20,7 @@ Sparky.task("build:renderer", () => {
     homeDir: "src/renderer",
     output: "dist/renderer/$name.js",
     hash: false,
-    target: "electron",
+    target: "browser",
     cache: !production,
     sourceMaps: !production,
     plugins: [
@@ -97,22 +96,14 @@ Sparky.task("build:main", () => {
   const app = fuse.bundle("index")
     .instructions("> [index.ts]");
 
-  if (!production) {
-    app.watch();
-
-    return fuse.run().then(() => {
-      // launch the electron app.
-      const child = spawn("npm", ["run", "start:electron:watch"], { shell: true, stdio: "pipe" });
-      child.stderr.on("data", data => console.error(data.toString()));
-    });
-  }
+  if (!production) app.watch();
 
   return fuse.run();
 });
 
 
 // Main task.
-Sparky.task("default", ["clean:dist", "clean:cache", "build:renderer", "copy:renderer:assets", "build:main"], () => { });
+Sparky.task("default", ["clean:dist", "clean:cache", "build:renderer", "copy:renderer:assets", "build:main",], () => { });
 
 // Wipe it all.
 Sparky.task("clean:dist", () => Sparky.src("dist/*").clean("dist/"));

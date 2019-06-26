@@ -24,7 +24,7 @@ class Player extends PhysicsEntity {
     s.x = WINDOW_SIZE.width / 2;
     s.y = WINDOW_SIZE.height / 2;
 
-    this.game.viewport.follow(s, { radius: 85, acceleration: 4 });
+    this.game.viewport.follow(s, { radius: 270, acceleration: 4 });
 
     new KeyMonitor("up")
       .onPress(() => {
@@ -64,8 +64,8 @@ class Player extends PhysicsEntity {
     const flrs = this.entities
       .filter(e => e instanceof Floor);
 
-    const enemies = this.entities
-      .filter(e => e instanceof Enemy);
+    /*const enemies = this.entities
+      .filter(e => e instanceof Enemy);*/
 
     const bounds = this.sprite.getBounds();
 
@@ -88,11 +88,11 @@ class Player extends PhysicsEntity {
       }
     }
 
-    for (const enm of enemies) {
+    /*for (const enm of enemies) {
       const enemyBounds = enm.sprite.getBounds();
       const { x, y } = this.checkCorrectCollision(bounds, enemyBounds, false, false);
       if (x || y) this.game.props.history();
-    }
+    }*/
   }
 }
 
