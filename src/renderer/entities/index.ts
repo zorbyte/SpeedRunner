@@ -9,7 +9,12 @@ const floorLayer = [
   Floor,
   Floor,
   Floor,
-]
+  Floor,
+  Floor,
+  Floor,
+  Floor,
+  Floor
+];
 
 export default [
   //...floorLayer,

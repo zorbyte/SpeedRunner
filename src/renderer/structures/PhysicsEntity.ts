@@ -10,7 +10,7 @@ class PhysicsEntity extends Entity {
   /**
    * @description Checks and corrects collisions.
    * @param bounds The bounds of the colliding object.
-   * @param otherBounds The bounds of the collidee.
+   * @param otherBounds The bounds of the collider.
    * @param corX Corrects X axis collisions.
    * @param corY Corrects Y axis collisions.
    */

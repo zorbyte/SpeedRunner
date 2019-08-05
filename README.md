@@ -1,3 +1,3 @@
 # SpeedRunner
 
-My Game for Game Development.
+My Game for  a school course, written with Typescript, Electron and Pixi.

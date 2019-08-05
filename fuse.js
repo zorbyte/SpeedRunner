@@ -100,8 +100,8 @@ Sparky.task("build:main", () => {
   if (!production) app.watch();
 
   return fuse.run().then(() => {
-    // launch the electron app if the platform is windows, fusebox behaviour is different on MacOS.
-    if (process.platform === "win32" && !production) {
+    // ~~launch the electron app if the platform is windows, fusebox behaviour is different on MacOS.~~
+    if (/*process.platform === "win32" &&*/ !production) {
       const child = spawn("npm", ["run", "start:electron:watch"], { shell: true, stdio: "pipe" });
       child.stderr.on("data", data => console.error(data.toString()));
     }
